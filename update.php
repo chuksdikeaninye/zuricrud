@@ -1,8 +1,8 @@
 <?php 
 
-$id = $_GET['id'];
-
 include 'database.php'; 
+
+$id = $_GET['id'];
 
 $query = "SELECT * FROM courses WHERE id ='$id'";
 
@@ -10,14 +10,26 @@ $rows = mysqli_query($connect,$query);
 
 $row = $rows->fetch_assoc();
 
-
-
-;?>
+  if (isset($_POST['updatecourse'])) {
+    // Assign Vars
+    $courseName = mysqli_real_escape_string($connect, $_POST['courseName']);
+$query2 = "UPDATE courses
+                 SET 
+                 courseName = '$courseName'";
+      
+               
+                $update_row = mysqli_query($connect,$query2);
+     if ($update_row) {
+      echo "<h3>Successfully Updated</h3>";
+      header('location:welcome.php');
+      
+    }
+  }?>
 
    <body style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;  height:50%; max-width: 500px; margin: auto; text-align: center; background-color:#A9A9A9;">
 <h1><strong><a style="text-decoration: none; color:#000000 ;" href="welcome.php">Zuri CRUD</a></strong></h1>
       </div>
-        <form method="post" action="addcourse.php?id=<?php echo $id;?>">
+        <form method="post" >
            <div class="form-group">
       <strong><label for="exampleName"></label></strong><br>
       <input  name= "courseName" type="text" value="<?php echo $row['courseName'];?>" class="form-control" id="exampleName" placeholder="Enter your Course Name">
@@ -42,27 +54,3 @@ $row = $rows->fetch_assoc();
 
 </table>
 </center>
-
-<?php
-  if (isset($_POST['updatecourse'])) {
-    // Assign Vars
-    $courseName = mysqli_real_escape_string($connect, $_POST['courseName']);
- 
-  // simple validation
-    if ($courseName == '') {
-      // set error
-      $error = 'Please fill out required fields';
-    } else {
-      $query = "UPDATE courses
-                 SET 
-                 courseName = '$courseName',
-                WHERE id ='$id'";
-               
-                $update_row = mysqli_query($connect,$query);
-     if ($update_row) {
-      echo "<h3>Successfully Updated</h3>";
-      header('location:addcourse.php');
-      
-    }
-  }
-}
