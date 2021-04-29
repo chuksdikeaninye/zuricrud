@@ -15,7 +15,7 @@ $row = $rows->fetch_assoc();
     $courseName = mysqli_real_escape_string($connect, $_POST['courseName']);
 $query2 = "UPDATE courses
                  SET 
-                 courseName = '$courseName'";
+                 courseName = '$courseName' WHERE id ='$id'";
       
                
                 $update_row = mysqli_query($connect,$query2);
@@ -54,3 +54,7 @@ $query2 = "UPDATE courses
 
 </table>
 </center>
+
+
+
+
