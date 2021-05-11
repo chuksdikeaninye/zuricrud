@@ -81,7 +81,7 @@ if(isset($_POST['register']))
         // Else redirect us back to our index page
         else {
            echo "Account created<br><br>, Welcome.<br>".$firstName;
-                header('Refresh: 2; URL = welcome.php');
+                header('Refresh: 2; URL = index.php');
           exit();
       }
     }
